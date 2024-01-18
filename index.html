@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>woah</title>
+	<link rel="icon" href="./baseschwepe.png" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rippleui@1.12.1/dist/css/styles.css" />
+	<script type="importmap">
+		{
+        "imports": {
+          "PocketBase": "https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.20.3/pocketbase.es.min.js",
+          "vue": "https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.prod.js",
+          "vue-import": "https://cdn.jsdelivr.net/npm/vue-import/dist/vue-import.esm-browser.js",
+          "vue-router": "https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.esm-browser.js",
+          "@vue/devtools-api": "https://cdn.jsdelivr.net/npm/@vue/devtools-api/lib/esm/index.js",
+          "@splinetool/loader": "https://unpkg.com/@splinetool/loader@1.0.29/build/SplineLoader.js",
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+  </script>
+	<!-- <script
+      type="module"
+      src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.20.3/pocketbase.es.min.js"
+    ></script>
+    <script type="module">
+      import PocketBase from "PocketBase";
+      window.pb = new PocketBase("http://127.0.0.1:8090");
+      pb.beforeSend = function (url, options) {
+        options.headers["Cache-Control"] = "max-age=10";
+        return { url, options };
+      };
+    </script> -->
+	<style>
+		html,
+		body {
+			margin: 0;
+			background-image: url(https://media1.giphy.com/media/KkoOS7jtmri6MXJoOp/giphy.gif);
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		canvas {
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app" v-cloak>
+		<my-component></my-component>
+		<router-view></router-view>
+		<!-- <renderer ref="renderer" antialias orbit-ctrl resize="window">
+            <camera :position="{ z: 10 }"></camera>
+            <scene>
+                <point-light :position="{ y: 50, z: 50 }"></point-light>
+                <box ref="box" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
+                    <lambert-material></lambert-material>
+                </box>
+            </scene>
+        </renderer> -->
+	</div>
+	<script type="module">
+		// import { createApp } from "https://unpkg.com/troisjs@0.3.3/build/trois.module.cdn.min.js";
+        import { createApp, defineAsyncComponent } from 'vue'
+        import { createRouter, createWebHashHistory } from "vue-router";
+        import vueImport from "vue-import";
+
+        const routes = [
+            { path: "/", redirect: "/welcome" },
+            {
+                path: "/welcome",
+                component: await vueImport("./component/welcome.vue"),
+            },
+            {
+                path: "/home",
+                component: () => vueImport("./component/home.vue"),
+            },
+        ];
+
+        const router = createRouter({
+            history: createWebHashHistory(),
+            routes,
+        });
+
+        // createApp({
+        //     mounted() {
+        //         const renderer = this.$refs.renderer;
+        //         const box = this.$refs.box.mesh;
+        //         renderer.onBeforeRender(() => {
+        //             box.rotation.x += 0.01;
+        //         });
+        //     },
+        // }).mount("#app");
+
+        const app = createApp();
+
+        app.component("my-component", await vueImport("./component/common.vue"));
+        app.use(router);
+        app.mount("#app");
+    </script>
+
+	<!-- <script type="module">
+        import { createApp, defineAsyncComponent } from "vue";
+        import { createRouter, createWebHashHistory } from "vue-router";
+        import vueImport from "vue-import";
+
+        const routes = [
+            { path: "/", redirect: "/welcome" },
+            {
+                path: "/welcome",
+                component: await vueImport("./component/welcome.vue"),
+            },
+            {
+                path: "/home",
+                component: () => vueImport("./component/home.vue"),
+            },
+        ];
+
+        const router = createRouter({
+            history: createWebHashHistory(),
+            routes,
+        });
+
+        
+    </script> -->
+
+</body>
+
+</html>
